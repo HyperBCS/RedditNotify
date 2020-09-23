@@ -1,0 +1,410 @@
+{% extends "default.html" %} {% block body %}
+
+<h2 style="text-align:center;">Subscribed Subreddits - {{guild_name}}</h2>
+<div class="col" id="form_area">
+	<div style="display: none;">
+		<form class="row subreddit_box" id="subreddit_box_original">
+			<div class="col">
+				<div class="col entry_message">
+				</div>
+				<div class="row">
+					<div class="col mr-auto">
+						<div class="row">
+							<div class="col-auto form-inline subreddit_form">
+								<div class="col-auto subreddit_items">
+									<label class="subreddit_prefix">/r/</label>
+								</div>
+								<div class="col-auto subreddit_items">
+									<input type="text" class="form-control subreddit" name="subreddit" maxlength="19"
+										placeholder="AskReddit">
+								</div>
+							</div>
+							{% if dash_type == "guild" %}
+							<div style="padding-right:12px;padding-left:0px;" class="col-auto">
+								<div class="dropdown">
+									<button class="btn btn-secondary dropdown-toggle channel_name" type="button"
+										data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+										Select a channel
+									</button>
+									<div class="dropdown-menu channel" aria-labelledby="dropdownMenuButton">
+										{% for ch_id in channels %}
+										<a class="dropdown-item"
+											channel_id="{{channels[ch_id]['id']}}">#{{channels[ch_id]['name']}}</a>
+										{% endfor %}
+									</div>
+								</div>
+							</div>
+							{% endif %}
+							<div class="col-auto" style="padding-left:0px;">
+								<div class="dropdown">
+									<button class="btn btn-secondary dropdown-toggle nsfw_div" type="button"
+										data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+										Allow NSFW
+									</button>
+									<div class="dropdown-menu nsfw_type" aria-labelledby="dropdownMenuButton">
+										<a class="dropdown-item" value="allow">Allow NSFW</a>
+										<a class="dropdown-item" value="block">Block NSFW</a>
+										<a class="dropdown-item" value="only">Only NSFW</a>
+									</div>
+								</div>
+							</div>
+
+						</div>
+					</div>
+					<div class="col-auto d-flex action_buttons">
+						<button type="button" class="btn btn-light left_button"
+							onclick="removeForm(this)">Cancel</button>
+						<button type="button" class="btn btn-success submit" onclick="addEntry(this)"
+							disabled>Save</button>
+					</div>
+				</div>
+				<hr>
+				<div class="row">
+					<button type="button" class="btn btn-success add_keyword_button" onclick="addKeyword(this)">Add
+						Filter</button>
+				</div>
+			</div>
+			<input type="hidden" class="form-control" name="nsfw">
+			{% if dash_type == "guild" %}
+			<input type="hidden" class="form-control" name="channel">
+			{% endif %}
+			<input type="hidden" class="form-control" name="id">
+
+		</form>
+
+		<div class="row entry_element_style" id="entry_element">
+			<div class="col-12 col-sm-12 entry_box mr-2">
+				<div class="row">
+				<input type="text" class="form-control" maxlength="50" name="keyword">
+			</div>
+			</div>
+			<div class="col entry_div">
+				<div class="row btn-toolbar">
+					<div class="dropdown btn-group mr-2">
+						<button class="btn btn-secondary dropdown-toggle" type="button" data-toggle="dropdown"
+							aria-haspopup="true" aria-expanded="false">
+							Keyword
+						</button>
+						<div class="dropdown-menu keyword_toggle" aria-labelledby="dropdownMenuButton"
+							value="whitelist">
+							<a class="dropdown-item" value="whitelist">Keyword</a>
+							<a class="dropdown-item" value="blacklist">Blacklist</a>
+						</div>
+					</div>
+					<div class="dropdown btn-group mr-2">
+						<button class="btn btn-secondary dropdown-toggle" type="button" value="title"
+							data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+							Title
+						</button>
+						<div class="dropdown-menu keyword_type" aria-labelledby="dropdownMenuButton" value="title">
+							<a class="dropdown-item" value="title">Title</a>
+							<a class="dropdown-item" value="author">Author</a>
+							<a class="dropdown-item" value="link_flair_text">Flair</a>
+						</div>
+					</div>
+					<div class="dropdown btn-group mr-2">
+						<button class="btn btn-secondary dropdown-toggle" type="button" value=0 data-toggle="dropdown"
+							aria-haspopup="true" aria-expanded="false">
+							Regex Disabled
+						</button>
+						<div class="dropdown-menu regex_toggle" aria-labelledby="dropdownMenuButton" value=0>
+							<a class="dropdown-item" value=0>Regex Disabled</a>
+							<a class="dropdown-item" value=1>Regex Enabled</a>
+						</div>
+					</div>
+					<div class="dropdown btn-group mr-2">
+						<button class="btn btn-secondary dropdown-toggle" type="button" value=1 data-toggle="dropdown"
+							aria-haspopup="true" aria-expanded="false">
+							Required
+						</button>
+						<div class="dropdown-menu required_toggle" aria-labelledby="dropdownMenuButton" value=1>
+							<a class="dropdown-item" value=1>Required</a>
+							<a class="dropdown-item" value=0>Optional</a>
+						</div>
+					</div>
+					<div class="delete_keyw_div">
+						<button type="button" class="btn btn-danger" onclick="removeEntry(this)">Remove Filter</button>
+					</div>
+				</div>
+				<hr>
+			</div>
+
+		</div>
+
+
+	</div>
+	<div class="d-flex justify-content-center">
+		<button type="button" class="btn btn-success" id="cloneButton" onclick="addForm()">Add Subscription</button>
+	</div>
+
+	<script>
+
+		var mask = new RegExp('^[A-Za-z0-9_]*$')
+
+		function addForm() {
+			var clone = $("#subreddit_box_original").first().clone().prop('id', 'form_new');
+			$("#cloneButton").parent().before(clone)
+			$("input[name=subreddit]").regexMask(mask)
+		}
+
+		function addKeyword(element) {
+			var clone = $("#entry_element").first().clone().prop('id', 'entry_element_new');
+			$(element).parent().before(clone)
+		}
+
+		const capitalize = (s) => {
+			if (typeof s !== 'string') return ''
+			return s.charAt(0).toUpperCase() + s.slice(1)
+		}
+
+		{% for entry_name in entries %}
+		{% for entry in entries[entry_name] %}
+		var clone = $("#subreddit_box_original").first().clone().prop('id', 'form_{{entry_name}}_{{loop.index}}');
+		clone.find("input[name=subreddit]").val("{{entry_name}}")
+		var channel_name = clone.find(".dropdown-item[channel_id={{entry.channel_id}}]").text()
+		clone.find(".channel_name").text(channel_name)
+		clone.find("input[name=channel]").val("{{entry.channel_id}}")
+		clone.find("input[name=id]").val("{{entry.id}}")
+		clone.find(".action_buttons").html(`
+	                	<button type="button" class="btn btn-danger left_button" onclick="deleteEntry(this)">Remove Subreddit</button>
+	                	<button type="button" class="btn btn-success submit" onclick="updateEntry(this)" type="submit">Update</button>
+			`)
+		clone.find("input[name=nsfw]").val("{{entry.nsfw}}")
+		clone_nsfw = clone.find("input[name=nsfw]").val()
+		if (clone_nsfw == 'block') {
+			clone.find(".nsfw_div").text("Block NSFW")
+		} else if (clone_nsfw == 'only') {
+			clone.find(".nsfw_div").text("Only NSFW")
+		}
+		$("#cloneButton").parent().before(clone)
+		{% for keyword in entry['keywords'] %}
+		var key_clone = $("#entry_element").first().clone().prop('id', 'entry_element_new');
+
+		key_clone.find("input[name=keyword").val({{ keyword['keyword'] | tojson }})
+		key_clone.find(".keyword_toggle").attr('value', "whitelist")
+		key_clone.find(".dropdown-toggle").first().text("Keyword")
+		key_clone.find(".keyword_type").attr('value', {{ keyword['keyword_type'] | tojson }})
+		key_clone.find(".regex_toggle").attr('value', "{{keyword['regex']}}")
+		key_clone.find(".required_toggle").attr('value', "{{keyword['required']}}")
+		{% if  keyword['regex'] == false %}
+		key_clone.find(".regex_toggle").first().siblings(".dropdown-toggle").text("Regex Disabled")
+		{% else %}
+		key_clone.find(".regex_toggle").first().siblings(".dropdown-toggle").text("Regex Enabled")
+		{% endif %}
+		{% if  keyword['required'] == true %}
+		key_clone.find(".required_toggle").first().siblings(".dropdown-toggle").text("Required")
+		{% else %}
+		key_clone.find(".required_toggle").first().siblings(".dropdown-toggle").text("Optional")
+		{% endif %}
+		{% if keyword['keyword_type'] == "link_flair_text" %}
+		key_clone.find(".keyword_type").first().siblings(".dropdown-toggle").text("Flair")
+		{% else %}
+		key_clone.find(".keyword_type").first().siblings(".dropdown-toggle").text(capitalize("{{keyword['keyword_type']}}"))
+		{% endif %}
+		$(clone).find(".add_keyword_button").parent().before(key_clone)
+		{% endfor %}
+
+		{% for keyword in entry['blacklist'] %}
+		var key_clone = $("#entry_element").first().clone().prop('id', 'entry_element_new');
+
+		key_clone.find("input[name=keyword").val({{ keyword['keyword'] | tojson }})
+		key_clone.find(".keyword_toggle").attr('value', "blacklist")
+		key_clone.find(".dropdown-toggle").first().text("Blacklist")
+		key_clone.find(".keyword_type").attr('value', {{ keyword['keyword_type'] | tojson }})
+		key_clone.find(".regex_toggle").attr('value', "{{keyword['regex']}}")
+		key_clone.find(".required_toggle").attr('value', "{{keyword['required']}}")
+		{% if  keyword['regex'] == false %}
+		key_clone.find(".regex_toggle").first().siblings(".dropdown-toggle").text("Regex Disabled")
+		{% else %}
+		key_clone.find(".regex_toggle").first().siblings(".dropdown-toggle").text("Regex Enabled")
+		{% endif %}
+		{% if  keyword['required'] == true %}
+		key_clone.find(".required_toggle").first().siblings(".dropdown-toggle").text("Required")
+		{% else %}
+		key_clone.find(".required_toggle").first().siblings(".dropdown-toggle").text("Optional")
+		{% endif %}
+		{% if keyword['keyword_type'] == "link_flair_text" %}
+		key_clone.find(".keyword_type").first().siblings(".dropdown-toggle").text("Flair")
+		{% else %}
+		key_clone.find(".keyword_type").first().siblings(".dropdown-toggle").text(capitalize("{{keyword['keyword_type']}}"))
+		{% endif %}
+		$(clone).find(".add_keyword_button").parent().before(key_clone)
+		{% endfor %}
+		{% endfor %}
+		{% endfor %}
+
+		$(document).on("click", ".dropdown-menu.channel a", function () {
+			$(this).parent().siblings(".dropdown-toggle").text($(this).text())
+			var curr_form = $(this).last().closest("form")
+			if (curr_form.find("input[name=subreddit]").val().length > 1) {
+				$(this).last().closest("form").find(".submit").removeAttr("disabled")
+			}
+			curr_form.find("[name=channel]").val($(this).attr('channel_id'))
+		});
+
+		$(document).on("click", ".dropdown-menu.keyword_toggle a", function () {
+			$(this).parent().siblings(".dropdown-toggle").text($(this).text())
+			if ($(this).attr('value') == 'blacklist') {
+				$(this).parentsUntil(".entry_div").parent().siblings(".required_dropdown").first().css('display', 'none')
+			} else {
+				$(this).parentsUntil(".entry_div").parent().siblings(".required_dropdown").first().css('display', 'inline')
+			}
+			$(this).parent().attr('value', $(this).attr('value'))
+		});
+
+		$(document).on("click", ".dropdown-menu.keyword_type a", function () {
+			$(this).parent().siblings(".dropdown-toggle").text($(this).text())
+			$(this).parent().attr('value', $(this).attr('value'))
+		});
+
+		$(document).on("click", ".dropdown-menu.regex_toggle a", function () {
+			$(this).parent().siblings(".dropdown-toggle").text($(this).text())
+			$(this).parent().attr('value', $(this).attr('value'))
+		});
+
+		$(document).on("click", ".dropdown-menu.nsfw_type a", function () {
+			$(this).parent().siblings(".dropdown-toggle").text($(this).text())
+			$(this).closest("form").find("input[name=nsfw]").val($(this).attr('value'))
+		});
+
+		$(document).on("click", ".dropdown-menu.required_toggle a", function () {
+			$(this).parent().siblings(".dropdown-toggle").text($(this).text())
+			$(this).parent().attr('value', $(this).attr('value'))
+		});
+
+		$(document).on("input", "input[name=subreddit]", function () {
+			if ($(this).val().length > 1 && ($(this).last().closest("form").find("input[name=channel]").length == 0 || $(this).last().closest("form").find("input[name=channel]").val().length > 0)) {
+				$(this).last().closest("form").find(".submit").removeAttr("disabled")
+			} else {
+				$(this).last().closest("form").find(".submit").prop('disabled', true);
+			}
+		});
+
+		function displayMessage(element, message, level) {
+			$(element).append(`
+	                <div class="d-flex justify-content-center">
+                  		<div class="alert alert-` + level + ` alert-dismissible col-md-6 text-center" id="flash" role="alert">
+                  		<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>` + message + `
+                  	</div></div>`)
+		}
+
+		function getKeywords(formData, element) {
+			formData.push({})
+			entry_tmp = []
+			var pos = formData.length - 1
+			$(element).closest("form").find(".entry_element_style").each(function (index) {
+				kw = $(this).find("input[name=keyword").val()
+				kw_toggle = $(this).find(".keyword_toggle").attr('value')
+				kw_type = $(this).find(".keyword_type").attr('value')
+				regex_type = $(this).find(".regex_toggle").attr('value')
+				required_type = $(this).find(".required_toggle").attr('value')
+				entry = { 'keyword': kw, 'toggle': kw_toggle, 'type': kw_type, 'regex': regex_type, 'required': required_type }
+				entry_tmp.push(entry)
+			});
+			entry_final = { 'name': 'keywords', 'value': JSON.stringify(entry_tmp) }
+			formData[pos] = entry_final
+		};
+
+		function addEntry(element) {
+
+			var formData = $(element).closest("form").first().serializeArray()
+			getKeywords(formData, element)
+			$(element).prop("disabled", true)
+			var form_element = $(element).closest("form")
+			$.ajax({
+				type: "POST",
+				url: 'add_entry',
+				data: formData,
+				success: function (data) {
+					$(element).removeAttr("disabled")
+					form_element.find(".action_buttons").html(`
+				                	<button type="button" class="btn btn-danger left_button" onclick="deleteEntry(this)">Remove Subreddit</button>
+				                	<button type="button" class="btn btn-success submit" onclick="updateEntry(this)" type="submit">Update</button>
+						`)
+					form_element.find("input[name=id]").val(data)
+					displayMessage($(form_element).closest("form").find(".entry_message"), 'Successfully added subscription!', 'success')
+				},
+				error: function (e) {
+					if (e.status == 401) {
+						window.location.href = "/";
+					} else {
+						displayMessage($(form_element).closest("form").find(".entry_message"), e.responseText, 'danger')
+					}
+					$(element).removeAttr("disabled")
+				}
+			});
+
+		};
+
+		$.fn.regexMask = function (mask) {
+			$(this).keypress(function (event) {
+				if (!event.charCode) return true;
+				var part1 = this.value.substring(0, this.selectionStart);
+				var part2 = this.value.substring(this.selectionEnd, this.value.length);
+				if (!mask.test(part1 + String.fromCharCode(event.charCode) + part2))
+					return false;
+			});
+		};
+
+		$("input[name=subreddit]").regexMask(mask)
+
+		function deleteEntry(element) {
+			var formData = $(element).closest("form").first().serializeArray()
+			$(element).prop("disabled", true)
+			var form_element = $(element).closest("form")
+			$.ajax({
+				type: "POST",
+				url: 'delete_entry',
+				data: formData,
+				success: function (data) {
+					$(element).parentsUntil(".subreddit_box").parent().first().remove()
+					displayMessage($("#message"), 'Successfully removed subscription!', 'success')
+				},
+				error: function (e) {
+					if (e.status == 401) {
+						window.location.href = "/";
+					} else {
+						displayMessage($(form_element).closest("form").find(".entry_message"), e.responseText, 'danger')
+					}
+					$(element).removeAttr("disabled")
+				}
+			});
+		};
+
+
+		function updateEntry(element) {
+			var formData = $(element).closest("form").first().serializeArray()
+			$(element).prop("disabled", true)
+			getKeywords(formData, element)
+			var form_element = $(element).closest("form")
+			$.ajax({
+				type: "POST",
+				url: 'update_entry',
+				data: formData,
+				success: function (data) {
+					$(element).removeAttr("disabled")
+					displayMessage($(form_element).closest("form").find(".entry_message"), 'Successfully updated subscription!', 'success')
+				},
+				error: function (e) {
+					if (e.status == 401) {
+						window.location.href = "/";
+					} else {
+						$(element).removeAttr("disabled")
+						displayMessage($(form_element).closest("form").find(".entry_message"), e.responseText, 'danger')
+					}
+				}
+			});
+
+		};
+
+		function removeForm(element) {
+			$(element).parentsUntil(".subreddit_box").parent().first().remove()
+		}
+
+		function removeEntry(element) {
+			$(element).parentsUntil(".entry_element_style").parent().first().remove()
+		}
+
+	</script>
+
+	{% endblock %}

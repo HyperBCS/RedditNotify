@@ -1,0 +1,112 @@
+^CTraceback (most recent call last):
+  File "/home/brandon/RedditNotifyPriv/venv/lib/python3.6/site-packages/gevent/monkey.py", line 831, in _shutdown
+    sleep()
+  File "/home/brandon/RedditNotifyPriv/venv/lib/python3.6/site-packages/gevent/hub.py", line 156, in sleep
+    waiter.get()
+  File "src/gevent/_waiter.py", line 140, in gevent.__waiter.Waiter.get
+  File "src/gevent/_waiter.py", line 151, in gevent.__waiter.Waiter.get
+  File "src/gevent/_greenlet_primitives.py", line 61, in gevent.__greenlet_primitives.SwitchOutGreenletWithLoop.switch
+  File "src/gevent/_greenlet_primitives.py", line 61, in gevent.__greenlet_primitives.SwitchOutGreenletWithLoop.switch
+  File "src/gevent/_greenlet_primitives.py", line 65, in gevent.__greenlet_primitives.SwitchOutGreenletWithLoop.switch
+  File "src/gevent/__greenlet_primitives.pxd", line 35, in gevent.__greenlet_primitives._greenlet_switch
+SystemExit: 0
+2020-09-23T04:38:47Z <greenlet.greenlet object at 0x7fbc0931ed58> failed with SystemExit
+
+Traceback (most recent call last):
+  File "/home/brandon/RedditNotifyPriv/venv/lib/python3.6/site-packages/gevent/monkey.py", line 831, in _shutdown
+    sleep()
+  File "/home/brandon/RedditNotifyPriv/venv/lib/python3.6/site-packages/gevent/hub.py", line 156, in sleep
+    waiter.get()
+  File "src/gevent/_waiter.py", line 140, in gevent.__waiter.Waiter.get
+  File "src/gevent/_waiter.py", line 151, in gevent.__waiter.Waiter.get
+  File "src/gevent/_greenlet_primitives.py", line 61, in gevent.__greenlet_primitives.SwitchOutGreenletWithLoop.switch
+  File "src/gevent/_greenlet_primitives.py", line 61, in gevent.__greenlet_primitives.SwitchOutGreenletWithLoop.switch
+  File "src/gevent/_greenlet_primitives.py", line 65, in gevent.__greenlet_primitives.SwitchOutGreenletWithLoop.switch
+  File "src/gevent/__greenlet_primitives.pxd", line 35, in gevent.__greenlet_primitives._greenlet_switch
+SystemExit: 0
+2020-09-23T04:38:47Z <greenlet.greenlet object at 0x7fbc0931ed58> failed with SystemExit
+
+Exception ignored in: <bound method Connection.__del__ of Connection<host=localhost,port=6379,db=0>>
+Traceback (most recent call last):
+  File "/home/brandon/RedditNotifyPriv/venv/lib/python3.6/site-packages/redis/connection.py", line 537, in __del__
+  File "/home/brandon/RedditNotifyPriv/venv/lib/python3.6/site-packages/redis/connection.py", line 667, in disconnect
+TypeError: catching classes that do not inherit from BaseException is not allowed
+Exception ignored in: <bound method Connection.__del__ of Connection<host=localhost,port=6379,db=0>>
+Traceback (most recent call last):
+  File "/home/brandon/RedditNotifyPriv/venv/lib/python3.6/site-packages/redis/connection.py", line 537, in __del__
+  File "/home/brandon/RedditNotifyPriv/venv/lib/python3.6/site-packages/redis/connection.py", line 667, in disconnect
+TypeError: catching classes that do not inherit from BaseException is not allowed
+Exception ignored in: <bound method Connection.__del__ of Connection<host=localhost,port=6379,db=0>>
+Traceback (most recent call last):
+  File "/home/brandon/RedditNotifyPriv/venv/lib/python3.6/site-packages/redis/connection.py", line 537, in __del__
+  File "/home/brandon/RedditNotifyPriv/venv/lib/python3.6/site-packages/redis/connection.py", line 667, in disconnect
+TypeError: catching classes that do not inherit from BaseException is not allowed
+Exception ignored in: <bound method Connection.__del__ of Connection<host=localhost,port=6379,db=0>>
+Traceback (most recent call last):
+  File "/home/brandon/RedditNotifyPriv/venv/lib/python3.6/site-packages/redis/connection.py", line 537, in __del__
+  File "/home/brandon/RedditNotifyPriv/venv/lib/python3.6/site-packages/redis/connection.py", line 667, in disconnect
+TypeError: catching classes that do not inherit from BaseException is not allowed
+^CException ignored in: <module 'threading' from '/usr/lib64/python3.6/threading.py'>
+Traceback (most recent call last):
+  File "/usr/lib64/python3.6/threading.py", line 1294, in _shutdown
+    t.join()
+  File "/usr/lib64/python3.6/threading.py", line 1056, in join
+    self._wait_for_tstate_lock()
+  File "/usr/lib64/python3.6/threading.py", line 1072, in _wait_for_tstate_lock
+    elif lock.acquire(block, timeout):
+KeyboardInterrupt
+√^C^CTraceback (most recent call last):
+  File "/home/brandon/RedditNotifyPriv/venv/lib/python3.6/site-packages/gevent/monkey.py", line 831, in _shutdown
+    sleep()
+  File "/home/brandon/RedditNotifyPriv/venv/lib/python3.6/site-packages/gevent/hub.py", line 156, in sleep
+    waiter.get()
+  File "src/gevent/_waiter.py", line 140, in gevent.__waiter.Waiter.get
+  File "src/gevent/_waiter.py", line 151, in gevent.__waiter.Waiter.get
+  File "src/gevent/_greenlet_primitives.py", line 61, in gevent.__greenlet_primitives.SwitchOutGreenletWithLoop.switch
+  File "src/gevent/_greenlet_primitives.py", line 61, in gevent.__greenlet_primitives.SwitchOutGreenletWithLoop.switch
+  File "src/gevent/_greenlet_primitives.py", line 65, in gevent.__greenlet_primitives.SwitchOutGreenletWithLoop.switch
+  File "src/gevent/__greenlet_primitives.pxd", line 35, in gevent.__greenlet_primitives._greenlet_switch
+SystemExit: 0
+2020-09-23T06:25:19Z <greenlet.greenlet object at 0x7f9e9a452d58> failed with SystemExit
+
+Traceback (most recent call last):
+  File "/home/brandon/RedditNotifyPriv/venv/lib/python3.6/site-packages/gevent/monkey.py", line 831, in _shutdown
+    sleep()
+  File "/home/brandon/RedditNotifyPriv/venv/lib/python3.6/site-packages/gevent/hub.py", line 156, in sleep
+    waiter.get()
+  File "src/gevent/_waiter.py", line 140, in gevent.__waiter.Waiter.get
+  File "src/gevent/_waiter.py", line 151, in gevent.__waiter.Waiter.get
+  File "src/gevent/_greenlet_primitives.py", line 61, in gevent.__greenlet_primitives.SwitchOutGreenletWithLoop.switch
+  File "src/gevent/_greenlet_primitives.py", line 61, in gevent.__greenlet_primitives.SwitchOutGreenletWithLoop.switch
+  File "src/gevent/_greenlet_primitives.py", line 65, in gevent.__greenlet_primitives.SwitchOutGreenletWithLoop.switch
+  File "src/gevent/__greenlet_primitives.pxd", line 35, in gevent.__greenlet_primitives._greenlet_switch
+SystemExit: 0
+2020-09-23T06:25:19Z <greenlet.greenlet object at 0x7f9e9a452d58> failed with SystemExit
+
+Exception ignored in: <bound method Connection.__del__ of Connection<host=localhost,port=6379,db=0>>
+Traceback (most recent call last):
+  File "/home/brandon/RedditNotifyPriv/venv/lib/python3.6/site-packages/redis/connection.py", line 537, in __del__
+  File "/home/brandon/RedditNotifyPriv/venv/lib/python3.6/site-packages/redis/connection.py", line 667, in disconnect
+TypeError: catching classes that do not inherit from BaseException is not allowed
+Exception ignored in: <bound method Connection.__del__ of Connection<host=localhost,port=6379,db=0>>
+Traceback (most recent call last):
+  File "/home/brandon/RedditNotifyPriv/venv/lib/python3.6/site-packages/redis/connection.py", line 537, in __del__
+  File "/home/brandon/RedditNotifyPriv/venv/lib/python3.6/site-packages/redis/connection.py", line 667, in disconnect
+TypeError: catching classes that do not inherit from BaseException is not allowed
+^CException ignored in: <module 'threading' from '/usr/lib64/python3.6/threading.py'>
+Traceback (most recent call last):
+  File "/usr/lib64/python3.6/threading.py", line 1294, in _shutdown
+    t.join()
+  File "/usr/lib64/python3.6/threading.py", line 1056, in join
+    self._wait_for_tstate_lock()
+  File "/usr/lib64/python3.6/threading.py", line 1072, in _wait_for_tstate_lock
+    elif lock.acquire(block, timeout):
+KeyboardInterrupt
+^CTraceback (most recent call last):
+  File "/home/brandon/RedditNotifyPriv/app/views/server_list.py", line 15, in show
+    guild_dict = util.filter_owned_guilds(util.get_user_guilds(user.token))
+  File "/home/brandon/RedditNotifyPriv/app/controllers/util.py", line 41, in get_user_guilds
+    r.raise_for_status()
+  File "/home/brandon/RedditNotifyPriv/venv/lib/python3.6/site-packages/requests/models.py", line 941, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 429 Client Error: Too Many Requests for url: https://discordapp.com/api/users/@me/guilds

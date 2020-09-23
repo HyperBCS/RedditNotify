@@ -1,0 +1,51 @@
+{% extends "default.html" %}
+{% block body %}
+
+    <h2 style="text-align:center;">My Servers</h2>
+    <div id="myserverdiv">
+
+	<table style="width:90%" class="table table-hover" id="myservertable">
+	  {% for gkey in guilds.keys() %}
+	  <tr>
+	    <td>
+	  	{% if guilds[gkey].icon %}
+	  	<img src="https://cdn.discordapp.com/icons/{{guilds[gkey].id}}/{{guilds[gkey].icon}}" height=48 width=48 class="server_icon">
+	  	{% else %}
+	  	<canvas id ="icon_{{guilds[gkey].id}}" width="48" height="48" class="server_icon"></canvas>
+	  	{% endif %}
+	    <span>{{guilds[gkey].name}}</span></td>
+	    {% if guilds[gkey].enabled %}
+	    <td style="text-align:center;"><a href="/dashboard/guild/{{guilds[gkey].id}}/" class="btn btn-success">Manage Server</a></td>
+	    {% else %}
+	    <td style="text-align:center;"><a href="https://discord.com/api/oauth2/authorize?client_id={{DISCORD_CLIENT_ID}}&permissions=537394240&scope=bot" class="btn btn-info">Add to Server</a></td>
+	    {% endif %}
+	  </tr>
+	  </tr>
+	  {% endfor %}
+	</table>
+    </div>
+
+
+    <script>
+
+    	
+	  {% for gkey in guilds.keys() %}
+	  	{% if not guilds[gkey].icon %}
+	  	var canvas = document.getElementById("icon_{{guilds[gkey].id}}");
+		var ctx = canvas.getContext("2d");
+		var server_name = {{guilds[gkey].initials  | tojson}}
+		var font_size = Math.max(Math.min(16 - (server_name.length-4)*2,16),10)
+		ctx.rect(0,0, 48, 48);
+		ctx.fillStyle = "#36393f";
+		ctx.fill();
+		ctx.fillStyle = "white";
+		ctx.font = font_size+"px Poppins";
+		ctx.textBaseline = "middle";
+		ctx.textAlign = "center";
+		ctx.fillText(server_name,24,24);
+		{% endif %}
+	  {% endfor %}
+
+    </script>
+
+{% endblock %}

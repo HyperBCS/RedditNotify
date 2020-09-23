@@ -1,0 +1,52 @@
+<!doctype html>
+<html>
+{% include "head.html" %}
+
+<body class="container">
+    {% include "header.html" %}
+    </div>
+    <div class="row">
+    <div class="col">
+            <div id="message">
+            <!-- Main -->
+            {% with messages = get_flashed_messages(with_categories=true) %}
+              <!-- Categories: success (green), info (blue), warning (yellow), danger (red) -->
+              {% if messages %}
+                {% for category, message in messages %}
+                <div class="d-flex justify-content-center">
+                  <div class="alert alert-{{ category }} alert-dismissible col-md-6 text-center" id="flash" role="alert">
+                  <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                  <!-- <strong>Title</strong> --> {{ message }}
+                  </div>
+                </div>
+                {% endfor %}
+              {% endif %}
+            {% endwith %}
+        </div>
+            <section id="main">    
+                <br>
+                {% block body %}
+                {% endblock %}
+                <br>
+            </section>
+    </div>
+    </div>
+    <hr>
+    <div>
+        {% include "footer.html" %}
+    </div>
+
+    <script>
+        {% if logged_in and data.avatar != None%}
+        size = $("#navbar")[0].clientHeight / 2
+        var imgText = "<img src=\"https://cdn.discordapp.com/avatars/{{data.id}}/{{data.avatar}}\" width="+size+", height="+size+">"
+        var div = $("#avatar").html(imgText)
+        {% endif %}
+        $(document).ready(function() {
+        // get current URL path and assign 'active' class
+        var pathname = window.location.pathname;
+        $('.navbar-nav > li > a[href="'+pathname+'"]').addClass('active');
+})
+    </script>
+</body>
+<html>

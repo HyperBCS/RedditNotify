@@ -1,0 +1,23 @@
+{% extends "default.html" %}
+{% block body %}
+<div class="masthead">
+  <div class="container h-100">
+    <div class="row h-100 align-items-center">
+      <div class="col-12 text-center">
+        <h1>RedditNotify</h1>
+        <p class="lead">Get a customized reddit feed on your server, managed by a simple dashboard!</p>
+        <p class="lead">
+          <a href="https://discord.com/api/oauth2/authorize?client_id={{DISCORD_CLIENT_ID}}&permissions=537394240&scope=bot" class="btn btn-lg btn-danger home_buttons">
+            <img src="https://discord.com/assets/1c8a54f25d101bdc607cec7228247a9a.svg" height=28 width = 34>
+          Add to Discord</a>
+          {% if logged_in %}
+          <a class="btn btn-lg btn-info home_buttons" href="/servers/">Manage Servers</a>
+          {% else %}
+          <a class="btn btn-lg btn-info home_buttons" href="https://discord.com/api/oauth2/authorize?client_id={{DISCORD_CLIENT_ID}}&{{REDIRECT_URI}}&response_type=code&scope=guilds%20identify">Manage Servers</a>
+          {% endif %}
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
