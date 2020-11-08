@@ -58,11 +58,11 @@ async def send_message(submission, guild_id, channel_id, entry_id, author):
             message.add_field(name="Flair", value=submission.link_flair_text)
         message.add_field(name="Submission Date", value=datetime.fromtimestamp(submission.created_utc).astimezone(timezone.utc).strftime('%Y-%m-%d %H:%M:%S UTC'))
         if guild_id == None:
-            user = client.get_user(int(author))
+            user = await client.fetch_user(int(author))
             await user.send(embed=message)
         else:
-            guild = client.get_guild(int(guild_id))
-            channel = guild.get_channel(int(channel_id))
+            guild = await client.fetch_guild(int(guild_id))
+            channel = await client.fetch_channel(int(channel_id))
             if channel == None:
                 delete_channels(entry_id)
                 return
